@@ -1,0 +1,7 @@
+server:
+  port: 5000
+
+node:
+  storage: storage_node_5000
+  peers:
+    - http://localhost:5001
