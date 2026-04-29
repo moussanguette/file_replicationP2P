@@ -9,6 +9,8 @@ import p2p.projet.projetPtoP.config.NodeConfig;
 import p2p.projet.projetPtoP.entity.Fichier;
 import p2p.projet.projetPtoP.repository.FileRepository;
 
+import java.util.List;
+
 @Service
 public class FileService {
     @Autowired(required=false)
@@ -21,8 +23,6 @@ public class FileService {
     // TODO 1: Sauvegarder le fichier localement
 
     public void saveFile(String filename, byte[] data) {
-
-        
         fichier.setNomFichier(filename);
         fichier.setFichier(data);
         fileRepository.save(fichier);
@@ -31,8 +31,11 @@ public class FileService {
 
     // TODO 2: Lire un fichier local
     public byte[] getFile(String filename) {
-        // À implémenter
-        return null;
+        // rechercher un fichier par son nom et retourner son fichier
+        fichier = fileRepository.findByNomFichier(filename);
+        byte[] fichierTrouver = fichier.getFichier();
+        return fichierTrouver;
+        //return null;
     }
 
     // TODO 3: Ajouter la réplication
