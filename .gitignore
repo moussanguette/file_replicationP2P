@@ -34,3 +34,7 @@ build/
 
 ### Documents ###
 *.docx
+
+### P2P Node data ###
+storage_node_*/
+logs/
