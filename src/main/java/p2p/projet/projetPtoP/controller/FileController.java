@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import p2p.projet.projetPtoP.service.FileService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/files")
 public class FileController {
@@ -45,5 +47,11 @@ public class FileController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.ok(data);
+    }
+
+    // Liste les fichiers stockés localement
+    @GetMapping
+    public ResponseEntity<List<String>> list() {
+        return ResponseEntity.ok(fileService.listFiles());
     }
 }
