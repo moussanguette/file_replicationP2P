@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+
 import lombok.Data;
 
 @Component
@@ -13,6 +14,7 @@ import lombok.Data;
 public class NodeConfig {
     private String storage;
     private List<String> peers;
+    private int replicationFactor = 2;
     
 
 }
