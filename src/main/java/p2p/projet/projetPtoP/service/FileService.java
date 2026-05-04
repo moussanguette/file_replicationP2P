@@ -79,8 +79,9 @@ public class FileService {
     }
 
     // Réplication : envoi du fichier à chaque peer connu
-    private void replicateFile(String filename, byte[] data) {
-        for (String peer : config.getPeers()) {
+   private void replicateFile(String filename, byte[] data) {
+        List<String> targets = selectTargets(config.getPeers());
+        for (String peer : targets) {
             try {
                 String url = peer + "/files/replicate/" + filename;
                 restTemplate.postForEntity(url, data, String.class);
@@ -89,6 +90,15 @@ public class FileService {
                 log.warn("[REPLICATION] Peer {} injoignable : {}", peer, e.getMessage());
             }
         }
+    }
+
+    private List<String> selectTargets(List<String> allPeers) {
+        if (allPeers.size() <= config.getReplicationFactor() - 1) {
+            return allPeers;
+        }
+        // Mélanger et prendre les N premiers
+        Collections.shuffle(allPeers);
+        return allPeers.subList(0, config.getReplicationFactor() - 1);
     }
 
     // Recherche distribuée : interroge chaque peer jusqu'à trouver le fichier
